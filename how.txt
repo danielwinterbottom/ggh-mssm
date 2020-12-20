@@ -1,0 +1,20 @@
+Install CHAPLIN libraries on your system https://chaplin.hepforge.org/
+
+note i had to recompile powheg and could not use Christophers version
+
+if you also need to recompile powheg follow instructions here: https://twiki.cern.ch/twiki/bin/viewauth/CMS/PowhegBOXPrecompiled
+
+
+(hopefully this does not affect the gridjobs later on...)
+
+# setup work area:
+
+./scripts/setup.sh 125 "tb"
+
+# the  options are mass and the contribution - either "t" for top only "b" for bottom only or "tb" for top+bottom
+
+
+# to do:
+1. check the mod_scale things
+2. check the reweighting
+3. check it works from scratch to make gridpacks etc
