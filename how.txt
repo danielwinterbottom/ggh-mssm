@@ -16,5 +16,9 @@ if you also need to recompile powheg follow instructions here: https://twiki.cer
 
 # to do:
 1. check the mod_scale things
-2. check the reweighting
+2. implement hfact setting + uncerts
 3. check it works from scratch to make gridpacks etc
+
+python ../../../scripts/batch_sub.py -p 1 -j 11
+python ../../../scripts/batch_sub.py -p 2 -j 11
+python ../../../scripts/batch_sub.py -p 3 -j 11
