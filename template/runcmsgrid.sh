@@ -43,7 +43,6 @@ sed -i "/compute_rwgt/c\compute_rwgt 1" powheg.input
 sed -i "/lhrwgt_id/c\lhrwgt_id \'h_tb\'" powheg.input
 sed -i "/notop/c\notop 0" powheg.input
 sed -i "/nobot/c\nobot 0" powheg.input
-sed -i "/tanb/c\tanb 15" powheg.input
 sed -i "/higgstype/c\higgstype 1" powheg.input
 
 echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
@@ -53,7 +52,6 @@ mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
 sed -i "/lhrwgt_id/c\lhrwgt_id \'h_t\'" powheg.input
 sed -i "/notop/c\notop 0" powheg.input
 sed -i "/nobot/c\nobot 1" powheg.input
-sed -i "/tanb/c\tanb 15" powheg.input
 sed -i "/higgstype/c\higgstype 1" powheg.input
 
 echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
@@ -63,7 +61,6 @@ mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
 sed -i "/lhrwgt_id/c\lhrwgt_id \'h_b\'" powheg.input
 sed -i "/notop/c\notop 1" powheg.input
 sed -i "/nobot/c\nobot 0" powheg.input
-sed -i "/tanb/c\tanb 15" powheg.input
 sed -i "/higgstype/c\higgstype 1" powheg.input
 
 echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
@@ -73,7 +70,6 @@ mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
 sed -i "/lhrwgt_id/c\lhrwgt_id \'A_tb\'" powheg.input
 sed -i "/notop/c\notop 0" powheg.input
 sed -i "/nobot/c\nobot 0" powheg.input
-sed -i "/tanb/c\tanb 15" powheg.input
 sed -i "/higgstype/c\higgstype 3" powheg.input
 
 echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
@@ -83,7 +79,6 @@ mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
 sed -i "/lhrwgt_id/c\lhrwgt_id \'A_t\'" powheg.input
 sed -i "/notop/c\notop 0" powheg.input
 sed -i "/nobot/c\nobot 1" powheg.input
-sed -i "/tanb/c\tanb 15" powheg.input
 sed -i "/higgstype/c\higgstype 3" powheg.input
 
 echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
@@ -93,7 +88,6 @@ mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
 sed -i "/lhrwgt_id/c\lhrwgt_id \'A_b\'" powheg.input
 sed -i "/notop/c\notop 1" powheg.input
 sed -i "/nobot/c\nobot 0" powheg.input
-sed -i "/tanb/c\tanb 15" powheg.input
 sed -i "/higgstype/c\higgstype 3" powheg.input
 
 echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log

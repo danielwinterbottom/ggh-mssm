@@ -19,19 +19,40 @@ else
   width=2
 fi
 
-# set hfact depending on mass and contrib (to do)
-hfact=`awk "BEGIN {print ($mass+8.36)/4}"`
-if [ "$3" == 1 ]; then hfact=`awk "BEGIN {print 2*($mass+8.36)/4}"`; fi
-if [ "$3" == 2 ]; then hfact=`awk "BEGIN {print 0.5*($mass+8.36)/4}"`; fi
+# set hfact depending on mass and contrib
 
 #for h125 t = 48, b = 18, t+b = 9
-hfact=9 # this 
+hfact=9 
+
+inline=$(cat scripts/scales-higgs-mass-scan.dat | grep -P "^${mass}\t")
+
+if [ "$inline" == "" ]; then
+  echo "Error: There are no hfact damping scales for your chosen mass point, exiting."
+  exit
+fi
+
+stringarray=($inline)
+if [ "${contrib}" == "t" ]; then
+  hfact=${stringarray[1]}
+elif [ "${contrib}" == "b" ]; then
+  hfact=${stringarray[2]}
+elif [ "${contrib}" == "tb" ]; then
+  hfact=${stringarray[3]}
+else
+  echo "Error: Your chosen contribution must can only be t, b, tb, exiting"
+  exit
+fi
+
+if [ "$3" == 1 ]; then hfact=`awk "BEGIN {print 2*${hfact}}"`; fi
+if [ "$3" == 2 ]; then hfact=`awk "BEGIN {print 0.5*${hfact}}"`; fi
+
+echo "hfact set to: " $hfact
 
 workdir=`pwd`
-massdir=$workdir/m${mass}
+massdir=$workdir/m${mass}_${contrib}
 
-if [ "$3" == 1 ]; then massdir=$workdir/m${mass}_up; fi
-if [ "$3" == 2 ]; then massdir=$workdir/m${mass}_down; fi
+if [ "$3" == 1 ]; then massdir=$workdir/m${mass}_${contrib}_up; fi
+if [ "$3" == 2 ]; then massdir=$workdir/m${mass}_${contrib}_down; fi
 
 CMSSWdir=$massdir/CMSSW_10_2_3/src
 template=$workdir/template
@@ -43,11 +64,6 @@ scramv1 project CMSSW CMSSW_10_2_3
 cd $CMSSWdir ; eval `scramv1 runtime -sh` ; cd $massdir
 
 echo "Copying files:"
-#cp -v $template/pwgseeds.dat $CMSSWdir
-#cp -v $template/pwhg_main $CMSSWdir
-#cp -v $template/pwg-rwl.dat $CMSSWdir
-#cp -v $template/powheg.input-* $CMSSWdir
-#cp -v $template/runcmsgrid.sh $CMSSWdir
 cp -r $template/* $CMSSWdir
 
 sed -i "s/XHMASSX/${mass}/g" $CMSSWdir/powheg.input-*
