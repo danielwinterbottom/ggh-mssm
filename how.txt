@@ -20,4 +20,17 @@ python ../../../scripts/batch_sub.py -p 3 -j 11
 
 ./scripts/makegridpack.sh m125_tb
 
+
+for m in 125; do for c in t b tb; do for u in ""; do ./scripts/setup.sh ${m} "${c}" ${u}; done; done; done
+
+# can eventually add more masses and change u to "" 1 2 for uncertainty variations
+
+
+for m in 125; do for c in t b tb; do for j in "" ; do cd m${m}_${c}${j}/CMSSW_10_2_3/src; cmsenv; python ../../../scripts/batch_sub.py -p 1 -j 20 ; cd ../../../; done; done; done
+
+# can eventually change j to j in "" "_up" "_down" for uncertainty variations
+
+# do the above for stages 2-3 (using -p option)
+
+
 #to do check it works from gridpack and on crab!
