@@ -1,5 +1,7 @@
 run=${1}
 
+rm -r gridpack
+
 mkdir -p gridpack
 cp *.dat gridpack/.
 cp powheg.input-base gridpack/.
@@ -16,6 +18,6 @@ rm pwgcounters*
 rm pwg-st3-00[0-9][1-9]-stat.dat	# keep some info
 rm pwg-????-stat.dat
 
-tar czvf ggh_powheg_${run}.tar.gz *
+tar -czvf ggh_powheg_${run}.tar.gz *
 
 cd ..

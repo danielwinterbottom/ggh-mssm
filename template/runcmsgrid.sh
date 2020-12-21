@@ -19,20 +19,29 @@ cd ${cmssw_version}/src
 eval `scram runtime -sh`
 cd -
 
+#cd $LHEWORKDIR
+
+
 cat powheg.input-base > powheg.input
 sed -i "s/NEVENTS/${nevt}/g" powheg.input
 sed -i "s/SEED/${rnum}/g" powheg.input
 echo "parallelstage 4" >> powheg.input
 echo $rnum > pwgseeds.dat
 
+
 if [ -f pwgevents-0001.lhe ] ; then
         mv pwgevents-0001.lhe pwgevents-0001.lhe_old
 fi
 
-LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH":/vols/cms/dw515/lib")
+libs=$LHEWORKDIR"/lib"
+#LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH":/vols/cms/dw515/lib")
+LD_LIBRARY_PATH=$(echo ${LD_LIBRARY_PATH}:${libs})
+
+echo $LD_LIBRARY_PATH
 
 echo "Start generating events on " `date`
-echo $rnum | ./pwhg_main > lhe_generation.log 2>&1 &
+#echo $rnum | ./pwhg_main > lhe_generation.log 2>&1 &
+echo 1 | ./pwhg_main > lhe_generation.log 2>&1 &
 wait
 
 # do reweighting
@@ -98,6 +107,8 @@ python mod_scalup.py cmsgrid_final.lhe XHFACTX
 
 cp cmsgrid_final*.lhe ..
 mv cmsgrid_final_mod.lhe cmsgrid_final.lhe
+
+sed -i '/^#new weight/d' cmsgrid_final.lhe
 
 xmllint --noout cmsgrid_final.lhe > /dev/null 2>&1; test $? -eq 0 || fail_exit "xmllint integrity check failed on pwgevents.lhe"
 
