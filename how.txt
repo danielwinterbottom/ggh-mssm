@@ -32,5 +32,14 @@ for m in 125; do for c in t b tb; do for j in "" ; do cd m${m}_${c}${j}/CMSSW_10
 
 # do the above for stages 2-3 (using -p option)
 
+# make gridpacks
+
+for m in 125; do for c in t b tb; do for j in "" ; do cd m${m}_${c}${j}/CMSSW_10_2_3/src; pwd; cmsenv; ./../../../scripts/makegridpack.sh m${m}_${c}${j}; cd ../../../; done; done; done
+
+# submit jobs:
+
+for m in 125; do for c in t b tb; do for u in ""; do ./scripts/submit_gridjobs.sh ${m} "${c}" ${u}; done; done; done
 
 #to do check it works from gridpack and on crab!
+
+

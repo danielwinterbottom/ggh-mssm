@@ -75,7 +75,23 @@ sed -i "s/XHFACTX/${hfact}/g" $CMSSWdir/runcmsgrid.sh
 # tanb = 50 for H
 # alpha always pi/4
 
-sed -i "s/XTANBX/15/g" $CMSSWdir/powheg.input-*
+
+
+tanb=15
+
+#if (( $(echo $mass'<'200 | bc -l) )); then
+#  tanb=5
+#elif (( $(echo $mass'<'300 | bc -l) )); then
+#  tanb=7
+#elif (( $(echo $mass'<'400 | bc -l) )); then
+#  tanb=12
+#else
+#  tanb=15
+#fi
+
+echo tanb set to ${tanb}
+
+sed -i "s/XTANBX/${tanb}/g" $CMSSWdir/powheg.input-*
 sed -i "s/XALPHAX/0.785398163397448/g" $CMSSWdir/powheg.input-*
 
 # depending on contribution requested disable top or bottom couplings
