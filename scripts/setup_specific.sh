@@ -6,6 +6,9 @@ source $VO_CMS_SW_DIR/cmsset_default.sh
 mass=$1
 contrib=${2}	# incl, t, b or tb # Combinations are (contrib-scale): incl-t/b/tb, t-t, b-b, tb-tb, t-tb, b-tb 
 
+tanb=${4}
+higgs=${5}
+
 #set width depending on mass
 
 width=0.0041
@@ -49,7 +52,7 @@ if [ "$3" == 2 ]; then hfact=`awk "BEGIN {print 0.5*${hfact}}"`; fi
 echo "hfact set to: " $hfact
 
 workdir=`pwd`
-massdir=$workdir/m${mass}_${contrib}
+massdir=$workdir/m${mass}_${contrib}_${tanb}_${higgs}
 
 if [ "$3" == 1 ]; then massdir=$workdir/m${mass}_${contrib}_up; fi
 if [ "$3" == 2 ]; then massdir=$workdir/m${mass}_${contrib}_down; fi
@@ -78,7 +81,6 @@ sed -i "s/XHFACTX/${hfact}/g" $CMSSWdir/runcmsgrid.sh
 
 
 
-tanb=15
 
 #if (( $(echo $mass'<'200 | bc -l) )); then
 #  tanb=5
@@ -106,5 +108,7 @@ else
   sed -i "s/XNOBOTX/0/g" $CMSSWdir/powheg.input-*
   sed -i "s/XNOTOPX/0/g" $CMSSWdir/powheg.input-*
 fi
+
+sed -i "/higgstype/c\higgstype ${higgs}" $CMSSWdir/powheg.input-*
 
 cd $workdir 

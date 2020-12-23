@@ -102,6 +102,36 @@ sed -i "/higgstype/c\higgstype 3" powheg.input
 echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
 mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
 
+# rweight H tb
+sed -i "/lhrwgt_id/c\lhrwgt_id \'H_tb\'" powheg.input
+sed -i "/notop/c\notop 0" powheg.input
+sed -i "/nobot/c\nobot 0" powheg.input
+sed -i "/higgstype/c\higgstype 2" powheg.input
+sed -i "/tanb/c\tanb 50" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# rweight H t-only
+sed -i "/lhrwgt_id/c\lhrwgt_id \'H_t\'" powheg.input
+sed -i "/notop/c\notop 0" powheg.input
+sed -i "/nobot/c\nobot 1" powheg.input
+sed -i "/higgstype/c\higgstype 2" powheg.input
+sed -i "/tanb/c\tanb 50" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# rweight H b-only
+sed -i "/lhrwgt_id/c\lhrwgt_id \'H_b\'" powheg.input
+sed -i "/notop/c\notop 1" powheg.input
+sed -i "/nobot/c\nobot 0" powheg.input
+sed -i "/higgstype/c\higgstype 2" powheg.input
+sed -i "/tanb/c\tanb 50" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
 cat pwgevents-0001.lhe | grep -v "Random number generator exit values" > cmsgrid_final.lhe
 python mod_scalup.py cmsgrid_final.lhe XHFACTX
 
