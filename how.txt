@@ -40,6 +40,7 @@ for m in 125; do for c in t b tb; do for j in "" ; do cd m${m}_${c}${j}/CMSSW_10
 
 for m in 125; do for c in t b tb; do for u in ""; do ./scripts/submit_gridjobs.sh ${m} "${c}" ${u}; done; done; done
 
+# use 1 and 2 for uncerts in this above command!
 #to do check it works from gridpack and on crab!
 
 

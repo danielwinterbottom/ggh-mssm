@@ -132,6 +132,98 @@ sed -i "/tanb/c\tanb 50" powheg.input
 echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
 mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
 
+# change mass schemes
+
+sed -i "/tanb/c\tanb 15" powheg.input
+sed -i "/scheme 0/c\scheme 1" powheg.input
+sed -i "/topmass/c\topmass 163.0" powheg.input
+sed -i "/bottommass/c\bottommass 4.18d0" powheg.input
+
+# reweight h tb
+sed -i "/lhrwgt_id/c\lhrwgt_id \'h_tb_msbar\'" powheg.input
+sed -i "/notop/c\notop 0" powheg.input
+sed -i "/nobot/c\nobot 0" powheg.input
+sed -i "/higgstype/c\higgstype 1" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# reweight h t-only
+sed -i "/lhrwgt_id/c\lhrwgt_id \'h_t_msbar\'" powheg.input
+sed -i "/notop/c\notop 0" powheg.input
+sed -i "/nobot/c\nobot 1" powheg.input
+sed -i "/higgstype/c\higgstype 1" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# reweight h b-only
+sed -i "/lhrwgt_id/c\lhrwgt_id \'h_b_msbar\'" powheg.input
+sed -i "/notop/c\notop 1" powheg.input
+sed -i "/nobot/c\nobot 0" powheg.input
+sed -i "/higgstype/c\higgstype 1" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# reweight A tb
+sed -i "/lhrwgt_id/c\lhrwgt_id \'A_tb_msbar\'" powheg.input
+sed -i "/notop/c\notop 0" powheg.input
+sed -i "/nobot/c\nobot 0" powheg.input
+sed -i "/higgstype/c\higgstype 3" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# reweight A t-only
+sed -i "/lhrwgt_id/c\lhrwgt_id \'A_t_msbar\'" powheg.input
+sed -i "/notop/c\notop 0" powheg.input
+sed -i "/nobot/c\nobot 1" powheg.input
+sed -i "/higgstype/c\higgstype 3" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# reweight A b-only
+sed -i "/lhrwgt_id/c\lhrwgt_id \'A_b_msbar\'" powheg.input
+sed -i "/notop/c\notop 1" powheg.input
+sed -i "/nobot/c\nobot 0" powheg.input
+sed -i "/higgstype/c\higgstype 3" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# reweight H tb
+sed -i "/lhrwgt_id/c\lhrwgt_id \'H_tb_msbar\'" powheg.input
+sed -i "/notop/c\notop 0" powheg.input
+sed -i "/nobot/c\nobot 0" powheg.input
+sed -i "/higgstype/c\higgstype 2" powheg.input
+sed -i "/tanb/c\tanb 50" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# reweight H t-only
+sed -i "/lhrwgt_id/c\lhrwgt_id \'H_t_msbar\'" powheg.input
+sed -i "/notop/c\notop 0" powheg.input
+sed -i "/nobot/c\nobot 1" powheg.input
+sed -i "/higgstype/c\higgstype 2" powheg.input
+sed -i "/tanb/c\tanb 50" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# reweight H b-only
+sed -i "/lhrwgt_id/c\lhrwgt_id \'H_b_msbar\'" powheg.input
+sed -i "/notop/c\notop 1" powheg.input
+sed -i "/nobot/c\nobot 0" powheg.input
+sed -i "/higgstype/c\higgstype 2" powheg.input
+sed -i "/tanb/c\tanb 50" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+
 cat pwgevents-0001.lhe | grep -v "Random number generator exit values" > cmsgrid_final.lhe
 python mod_scalup.py cmsgrid_final.lhe XHFACTX
 

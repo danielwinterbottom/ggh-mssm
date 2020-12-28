@@ -36,6 +36,8 @@ cp -r $scripts/crab_sub.py $CMSSWdir/.
 
 sed -i "s/XHMASSX/${mass}/g" $CMSSWdir/gensim.py
 sed -i "s/XCONTRIBX/${x}/g" $CMSSWdir/gensim.py
+sed -i "s/XHTYPEINTX/25/g" $CMSSWdir/gensim.py
+sed -i "s/#SM-ON#//g" $CMSSWdir/gensim.py
 sed -i "s/XHMASSX/${mass}/g" $CMSSWdir/crab_sub.py
 sed -i "s/XCONTRIBX/${x}/g" $CMSSWdir/crab_sub.py
 
@@ -43,6 +45,6 @@ cd $CMSSWdir
 cp gridpack/*.tar.gz .
 
 pwd
-crab submit crab_sub.py
+#crab submit crab_sub.py
 
 cd $workdir 

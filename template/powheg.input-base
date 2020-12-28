@@ -14,8 +14,8 @@ lhans2 90900       ! pdf set for hadron 2 (LHA numbering)
 use-old-grid    1 ! if 1 use old grid if file pwggrids.dat is present (<> 1 regenerate)
 use-old-ubound  1 ! if 1 use norm of upper bounding function stored in pwgubound.dat, if present; <> 1 regenerate
 
-ncall1 5000   ! number of calls for initializing the integration grid
-itmx1  5    ! number of iterations for initializing the integration grid
+ncall1 27500   ! number of calls for initializing the integration grid
+itmx1  7    ! number of iterations for initializing the integration grid
 ncall2 5000    ! number of calls for computing the integral and finding upper bound
 itmx2  5     ! number of iterations for computing the integral and finding upper bound
 foldcsi   2    ! number of folds on csi integration
@@ -46,7 +46,7 @@ testplots  1      ! (default 0, do not) do NLO and PWHG distributions
 #bottomthrpdf 5.0  ! (default 5.0 GeV) pdf bottom treshold
 withnegweights 1 ! use negative weights
 
-runningscale 0    ! 0 = scales equal to the Higgs pole mass; 1  = scales equal to the Higgs virtuality; 
+runningscale 1    ! 0 = scales equal to the Higgs pole mass; 1  = scales equal to the Higgs virtuality; 
                   ! 2 = scales equal to the Higgs pole mass for Born-like configuration and to the transverse mass for real emission contribution
 # When using 2 uncomment the following option
 # btlscalereal 1
@@ -77,8 +77,8 @@ gfermi 0.116637D-04  ! GF
 hdecaymode -1        ! PDG code for first decay product of the higgs
 masswindow 10d0      !(default 10d0) number of widths around hmass in the BW for an off-shell Higgs boson
 scheme 0	     ! Mass renormalization scheme: 0 = OS (Default); 1 = MSBAR; 2 = DRBAR
-topmass 172.76       ! top quark mass
-bottommass 4.18d0    ! bottom quark mass - if defined it enables the bottom quark
+topmass 172.5       ! top quark mass
+bottommass 4.75d0    ! bottom quark mass - if defined it enables the bottom quark
 !charmmass 1.5d0     ! char quark mass - if defined it enables the charm quark
 ! Optional
 hdecaywidth 0        ! If equals to 1 read total decay width from HDECAY sm.br2 file

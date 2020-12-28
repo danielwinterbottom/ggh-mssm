@@ -8,9 +8,9 @@ contrib=${2}	# incl, t, b or tb # Combinations are (contrib-scale): incl-t/b/tb,
 
 #set width depending on mass
 
-width=0.0041
+width=0.00407
 if (( $(echo $mass'<'145 | bc -l) )); then 
-  width=0.0041
+  width=0.00407
 elif (( $(echo $mass'<'605 | bc -l) )); then 
   width=0.1
 elif (( $(echo $mass'<'2005 | bc -l) )); then
@@ -95,16 +95,19 @@ echo tanb set to ${tanb}
 sed -i "s/XTANBX/${tanb}/g" $CMSSWdir/powheg.input-*
 sed -i "s/XALPHAX/0.785398163397448/g" $CMSSWdir/powheg.input-*
 
-# depending on contribution requested disable top or bottom couplings
-if [ "${contrib}" == "t" ]; then 
-  sed -i "s/XNOBOTX/1/g" $CMSSWdir/powheg.input-*
-  sed -i "s/XNOTOPX/0/g" $CMSSWdir/powheg.input-*
-elif [ "${contrib}" == "b" ]; then
-  sed -i "s/XNOBOTX/0/g" $CMSSWdir/powheg.input-*
-  sed -i "s/XNOTOPX/1/g" $CMSSWdir/powheg.input-*
-else
-  sed -i "s/XNOBOTX/0/g" $CMSSWdir/powheg.input-*
-  sed -i "s/XNOTOPX/0/g" $CMSSWdir/powheg.input-*
-fi
+# we produce every nominal distribution as t-only as this has better stats at high pT, then the ME reweighting takes care of the difference
+sed -i "s/XNOBOTX/1/g" $CMSSWdir/powheg.input-*
+sed -i "s/XNOTOPX/0/g" $CMSSWdir/powheg.input-*
+## depending on contribution requested disable top or bottom couplings
+#if [ "${contrib}" == "t" ]; then 
+#  sed -i "s/XNOBOTX/1/g" $CMSSWdir/powheg.input-*
+#  sed -i "s/XNOTOPX/0/g" $CMSSWdir/powheg.input-*
+#elif [ "${contrib}" == "b" ]; then
+#  sed -i "s/XNOBOTX/0/g" $CMSSWdir/powheg.input-*
+#  sed -i "s/XNOTOPX/1/g" $CMSSWdir/powheg.input-*
+#else
+#  sed -i "s/XNOBOTX/0/g" $CMSSWdir/powheg.input-*
+#  sed -i "s/XNOTOPX/0/g" $CMSSWdir/powheg.input-*
+#fi
 
 cd $workdir 

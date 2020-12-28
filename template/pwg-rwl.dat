@@ -9,6 +9,9 @@
 <weight id='1007'> lhapdf=90900 renscfact=0.5d0 facscfact=1d0 </weight>
 <weight id='1008'> lhapdf=90900 renscfact=0.5d0 facscfact=2d0 </weight>
 <weight id='1009'> lhapdf=90900 renscfact=0.5d0 facscfact=0.5d0 </weight>
+<weight id='1010'> lhapdf=90900 renscfact=0.25d0 facscfact=0.25d0 </weight>
+<weight id='1011'> lhapdf=90900 renscfact=0.5d0 facscfact=0.25d0 </weight>
+<weight id='1012'> lhapdf=90900 renscfact=0.25d0 facscfact=0.5d0 </weight>
 </weightgroup>
 <weightgroup name='PDF_variation1' combine='hessian' >
 <weight id='10000'> lhapdf=90900 </weight>
