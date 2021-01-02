@@ -10,6 +10,8 @@ contrib=${2}	# incl, t, b or tb # Combinations are (contrib-scale): incl-t/b/tb,
 workdir=`pwd`
 massdir=$workdir/m${mass}_${contrib}
 
+echo $massdir
+
 x=${contrib}
 
 if [ "$3" == 1 ]; then 

@@ -132,6 +132,44 @@ sed -i "/tanb/c\tanb 50" powheg.input
 echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
 mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
 
+# hfact variation weights for testing
+sed -i "/tanb/c\tanb 15" powheg.input
+sed -i "/notop/c\notop 0" powheg.input
+sed -i "/nobot/c\nobot 1" powheg.input
+sed -i "/higgstype/c\higgstype 1" powheg.input
+sed -i "/#hfact/c\ " powheg.input
+
+hfact=XHFACTX
+hfact_up=`awk "BEGIN {print 2*${hfact}}"`
+hfact_down=`awk "BEGIN {print 0.5*${hfact}}"`
+
+# nominal
+
+sed -i "/lhrwgt_id/c\lhrwgt_id \'hfact_nominal\'" powheg.input
+sed -i "/^hfact/c\hfact ${hfact}" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# up
+
+sed -i "/lhrwgt_id/c\lhrwgt_id \'hfact_up\'" powheg.input
+sed -i "/^hfact/c\hfact ${hfact_up}" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# down
+
+sed -i "/lhrwgt_id/c\lhrwgt_id \'hfact_down\'" powheg.input
+sed -i "/^hfact/c\hfact ${hfact_down}" powheg.input
+
+echo $'1\npwgevents-0001.lhe' | ./pwhg_main &> run_pstage_5_1_test.log
+mv pwgevents-rwgt-0001.lhe pwgevents-0001.lhe
+
+# change hfact back to nominal value
+sed -i "/^hfact/c\hfact ${hfact}" powheg.input
+
 # change mass schemes
 
 sed -i "/tanb/c\tanb 15" powheg.input

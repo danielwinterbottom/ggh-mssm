@@ -63,6 +63,8 @@ for i in range (1, int(numJobs)+1) :
   os.system('echo \"ulimit -c 0\" >> %(jobname)s' % vars())
   os.system('echo \"cd $PWD\" >> %(jobname)s' % vars())
   os.system('echo \"export LD_LIBRARY_PATH=/vols/cms/dw515/ggh_mc/ggh-mssm/m125/CMSSW_10_2_3/biglib/slc7_amd64_gcc700:/vols/cms/dw515/ggh_mc/ggh-mssm/m125/CMSSW_10_2_3/lib/slc7_amd64_gcc700:/vols/cms/dw515/ggh_mc/ggh-mssm/m125/CMSSW_10_2_3/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_3/biglib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_3/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_3/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib:/usr/lib64:/cvmfs/grid.cern.ch/centos7-umd4-ui-4.0.3-1_191004/lib64:/cvmfs/grid.cern.ch/centos7-umd4-ui-4.0.3-1_191004/lib:/cvmfs/grid.cern.ch/centos7-umd4-ui-4.0.3-1_191004/usr/lib64:/cvmfs/grid.cern.ch/centos7-umd4-ui-4.0.3-1_191004/usr/lib:/vols/build/cms/dw515/LHAPDF/lib:/vols/cms/dw515/lib\" >> %(jobname)s' % vars())
+  sleep=(i-1)*2
+  os.system('echo \"sleep %(sleep)is\" >> %(jobname)s' % vars())
   if parstage in ['5','6','7']:
     innum = '{0:04}'.format(i)
     os.system('echo \"echo $\'%(i)i\\npwgevents-%(innum)s.lhe\' | ./pwhg_main &> run_%(jobID)s.log \" >> %(jobname)s' % vars())
