@@ -26,6 +26,8 @@ map_to_add['xs_bbH_ybyt_up'] = []
 map_to_add['xs_bbH_ybyt_down'] = []
 
 map_to_add['MH_ggH'] = []
+map_to_add['xs_ggH'] = []
+map_to_add['xs_ggH_up'] = []
 map_to_add['xs_ggH_t'] = []
 map_to_add['xs_ggH_t_up'] = []
 map_to_add['xs_ggH_b'] = []
@@ -33,6 +35,8 @@ map_to_add['xs_ggH_b_up'] = []
 map_to_add['xs_ggH_i'] = []
 map_to_add['xs_ggH_i_up'] = []
 
+map_to_add['xs_ggA'] = []
+map_to_add['xs_ggA_up'] = []
 map_to_add['xs_ggA_t'] = []
 map_to_add['xs_ggA_t_up'] = []
 map_to_add['xs_ggA_b'] = []
@@ -95,46 +99,23 @@ for i, x in enumerate(bbhfull):
  
     m = y[0]
 
-    if m<60. or m>250.: continue
+    #if m<60. or m>250.: continue
 
     (up,down) = GetUncert(y)
     (up_x,down_x) = GetUncert(x)
 
     xs_yb = y[1]
-#    g1.SetPoint(g1.GetN(), m, y[1])
-#    g2.SetPoint(g2.GetN(), m, 1.+up)
-#    g3.SetPoint(g3.GetN(), m, 1.+down)
-#
-#    g4.SetPoint(g4.GetN(), m, x[1])
-#    g5.SetPoint(g5.GetN(), m, 1.+up_x)
-#    g6.SetPoint(g6.GetN(), m, 1.+down_x)
-
 
     map_to_add['MH_bbH'].append(m)
     map_to_add['xs_bbH_ybyb'].append(y[1])  
-    map_to_add['xs_bbH_ybyb_up'].append(1.+up) 
-    map_to_add['xs_bbH_ybyb_down'].append(1.+down) 
+    map_to_add['xs_bbH_ybyb_up'].append((1.+up)*y[1]) 
+    map_to_add['xs_bbH_ybyb_down'].append((1.+down)*y[1]) 
 
     map_to_add['xs_bbH_ybyt'].append(x[1])
-    map_to_add['xs_bbH_ybyt_up'].append(1.+up_x)
-    map_to_add['xs_bbH_ybyt_down'].append(1.+down_x)
+    map_to_add['xs_bbH_ybyt_up'].append((1.+up_x)*x[1])
+    map_to_add['xs_bbH_ybyt_down'].append((1.+down_x)*x[1])
 
 fout = ROOT.TFile('xs_lowmass_yb_yt.root', 'RECREATE')
-
-#g1.Write('xs_bbh_ybyb')
-#g2.Write('xs_bbh_ybyb_up')
-#g3.Write('xs_bbh_ybyb_down')
-
-#g4.Write('xs_bbh_ybyt')
-#g5.Write('xs_bbh_ybyt_up')
-#g6.Write('xs_bbh_ybyt_down')
-
-#g7 = ROOT.TGraph(); g7.SetName('xs_ggh_t')
-#g8 = ROOT.TGraph(); g8.SetName('xs_ggh_t_up')
-#g9 = ROOT.TGraph(); g9.SetName('xs_ggh_b')
-#g10 = ROOT.TGraph(); g10.SetName('xs_ggh_b_up')
-#g11 = ROOT.TGraph(); g11.SetName('xs_ggh_i')
-#g12 = ROOT.TGraph(); g12.SetName('xs_ggh_i_up')
 
 g13 = ROOT.TGraph(); g13.SetName('xs_ggA_t')
 g14 = ROOT.TGraph(); g14.SetName('xs_ggA_t_up')
@@ -152,8 +133,7 @@ df = read_excel(xl_file, sheet_name = sheet)
 f_ws = ROOT.TFile('higgs_pt_v2.root')
 ws = f_ws.Get('w')
 
-for i in range(16,43):
-
+for i in range(4,118):
   m=df.iloc[i,0]
   xs=df.iloc[i,1]
   u1=df.iloc[i,4]
@@ -171,6 +151,7 @@ for i in range(16,43):
   for u in ['','_scale_up','_scale_down']:
 
     sm_nlo = ws.function("ggH_t_2HDM_xsec%(u)s" % vars()).getVal()+ ws.function("ggH_b_2HDM_xsec%(u)s" % vars()).getVal() + ws.function("ggH_i_2HDM_xsec%(u)s" % vars()).getVal()  
+    sm_A_nlo = ws.function("ggA_t_2HDM_xsec%(u)s" % vars()).getVal()+ ws.function("ggA_b_2HDM_xsec%(u)s" % vars()).getVal() + ws.function("ggA_i_2HDM_xsec%(u)s" % vars()).getVal()  
     xs_H_t = (ws.function("ggH_t_2HDM_xsec%(u)s" % vars()).getVal())/sm_nlo*xs
     xs_A_t = (ws.function("ggA_t_2HDM_xsec%(u)s" % vars()).getVal())/sm_nlo*xs
   
@@ -207,6 +188,8 @@ for i in range(16,43):
 #  g7.SetPoint(g7.GetN(), m, val)
 #  g8.SetPoint(g8.GetN(), m, 1.+u_tot)
 
+  map_to_add['xs_ggH'].append(xs)
+  map_to_add['xs_ggH_up'].append((1.+xs_u)*xs)
   
   map_to_add['xs_ggH_t'].append(val)
   map_to_add['xs_ggH_t_up'].append((1.+u_tot)*val)
@@ -228,6 +211,9 @@ for i in range(16,43):
 
   map_to_add['xs_ggH_i'].append(val)
   map_to_add['xs_ggH_i_up'].append((1.+u_tot)*val)
+
+  map_to_add['xs_ggA'].append(xs*sm_A_nlo/sm_nlo)
+  map_to_add['xs_ggA_up'].append((1.+xs_u)*xs*sm_A_nlo/sm_nlo)
 
   val = xs_map['A_t']
   val_u = xs_map['A_t_scale_up']
@@ -262,12 +248,17 @@ w.factory('Yt_H[1]' % vars())
 w.factory('Yb_H[1]' % vars())
 w.factory('Yt_A[1]' % vars())
 w.factory('Yb_A[1]' % vars())
-w.factory('mA[100,60,250]') 
-w.factory('mH[100,60,250]')
-w.factory('mh[100,60,250]')
+w.factory('mA[100,50,3000]') 
+w.factory('mH[100,50,3000]')
+w.factory('mh[100,50,3000]')
 
 for P in ['A','H','h']:
+  
   P_=P.upper()
+
+  spline_gg_xsec = ROOT.RooSpline1D('gg%(P)s_xsec' % vars(), '', w.arg('m%s' % (P)), len(map_to_add['MH_ggH']), array('d', map_to_add['MH_ggH']), array('d', map_to_add['xs_gg%(P_)s' % vars()]), 'LINEAR')
+  spline_gg_xsec_up = ROOT.RooSpline1D('gg%(P)s_xsec_up' % vars(), '', w.arg('m%s' % (P)), len(map_to_add['MH_ggH']), array('d', map_to_add['MH_ggH']), array('d', map_to_add['xs_gg%(P_)s_up' % vars()]), 'LINEAR')
+
   spline_gg_xsec_t = ROOT.RooSpline1D('gg%(P)s_t_xsec' % vars(), '', w.arg('m%s' % (P)), len(map_to_add['MH_ggH']), array('d', map_to_add['MH_ggH']), array('d', map_to_add['xs_gg%(P_)s_t' % vars()]), 'LINEAR')
   spline_gg_xsec_t_up = ROOT.RooSpline1D('gg%(P)s_t_xsec_up' % vars(), '', w.arg('m%s' % (P)), len(map_to_add['MH_ggH']), array('d', map_to_add['MH_ggH']), array('d', map_to_add['xs_gg%(P_)s_t_up' % vars()]), 'LINEAR')
 
@@ -284,6 +275,9 @@ for P in ['A','H','h']:
   spline_bb_ybyt_xsec = ROOT.RooSpline1D('bb%(P)s_ybyt_xsec' % vars(), '', w.arg('m%s' % (P)), len(map_to_add['MH_bbH']), array('d', map_to_add['MH_bbH']), array('d', map_to_add['xs_bbH_ybyt' % vars()]), 'LINEAR')
   spline_bb_ybyt_xsec_up = ROOT.RooSpline1D('bb%(P)s_ybyt_xsec_up' % vars(), '', w.arg('m%s' % (P)), len(map_to_add['MH_bbH']), array('d', map_to_add['MH_bbH']), array('d', map_to_add['xs_bbH_ybyt_up' % vars()]), 'LINEAR')
   spline_bb_ybyt_xsec_down = ROOT.RooSpline1D('bb%(P)s_ybyt_xsec_down' % vars(), '', w.arg('m%s' % (P)), len(map_to_add['MH_bbH']), array('d', map_to_add['MH_bbH']), array('d', map_to_add['xs_bbH_ybyt_down' % vars()]), 'LINEAR')
+
+  w.imp(spline_gg_xsec)
+  w.imp(spline_gg_xsec_up)
 
   w.imp(spline_gg_xsec_t)
   w.imp(spline_gg_xsec_t_up)
@@ -303,12 +297,22 @@ for P in ['A','H','h']:
   w.imp(spline_bb_ybyt_xsec_down)
 
 
-  for u in ['','_up','_down']:
-    w.factory('expr::xs_bb%(P)s%(u)s("@0*@2*@2 + (@1-@0)*@2*@3", bb%(P)s_ybyb_xsec%(u)s, bb%(P)s_ybyt_xsec%(u)s, Yb_%(P)s, Yt_%(P)s)' % vars())
-  for u in ['','_up']:
-    w.factory('expr::xs_gg%(P)s_t%(u)s("@0*@1*@1", gg%(P)s_t_xsec%(u)s, Yt_%(P)s)' % vars())
-    w.factory('expr::xs_gg%(P)s_b%(u)s("@0*@1*@1", gg%(P)s_b_xsec%(u)s, Yb_%(P)s)' % vars())
-    w.factory('expr::xs_gg%(P)s_i%(u)s("@0*@1*@2", gg%(P)s_i_xsec%(u)s, Yt_%(P)s, Yb_%(P)s)' % vars())
+  w.factory('expr::xs_bb%(P)s("@0*@2*@2 + (@1-@0)*@2*@3", bb%(P)s_ybyb_xsec, bb%(P)s_ybyt_xsec, Yb_%(P)s, Yt_%(P)s)' % vars())
+  w.factory('expr::xs_gg%(P)s("@0", gg%(P)s_xsec)' % vars())
+  w.factory('expr::xs_gg%(P)s_t("@0*@1*@1", gg%(P)s_t_xsec, Yt_%(P)s)' % vars())
+  w.factory('expr::xs_gg%(P)s_b("@0*@1*@1", gg%(P)s_b_xsec, Yb_%(P)s)' % vars())
+  w.factory('expr::xs_gg%(P)s_i("@0*@1*@2", gg%(P)s_i_xsec, Yt_%(P)s, Yb_%(P)s)' % vars())
+  for u in ['_up','_down']:
+    w.factory('expr::xs_bb%(P)s%(u)s("(@0*@2*@2 + (@1-@0)*@2*@3)/@4", bb%(P)s_ybyb_xsec%(u)s, bb%(P)s_ybyt_xsec%(u)s, Yb_%(P)s, Yt_%(P)s, xs_bb%(P)s)' % vars())
+  for u in ['_up','_down']:
+    w.factory('expr::xs_gg%(P)s%(u)s("@0/@1", gg%(P)s_xsec%(u)s, gg%(P)s_xsec)' % vars())
+    w.factory('expr::xs_gg%(P)s_t%(u)s("@0*@1*@1/@2", gg%(P)s_t_xsec%(u)s, Yt_%(P)s, xs_gg%(P)s_t)' % vars())
+    w.factory('expr::xs_gg%(P)s_b%(u)s("@0*@1*@1/@2", gg%(P)s_b_xsec%(u)s, Yb_%(P)s, xs_gg%(P)s_b)' % vars())
+    w.factory('expr::xs_gg%(P)s_i%(u)s("@0*@1*@2/@3", gg%(P)s_i_xsec%(u)s, Yt_%(P)s, Yb_%(P)s, xs_gg%(P)s_i)' % vars())
+  w.factory('expr::xs_gg%(P)s_down("(2-@0)", xs_gg%(P)s_up)' % vars())
+  w.factory('expr::xs_gg%(P)s_t_down("(2-@0)", xs_gg%(P)s_t_up)' % vars())
+  w.factory('expr::xs_gg%(P)s_b_down("(2-@0)", xs_gg%(P)s_b_up)' % vars())
+  w.factory('expr::xs_gg%(P)s_i_down("(2-@0)", xs_gg%(P)s_i_up)' % vars())
 
 
 w.importClassCode('RooSpline1D')
