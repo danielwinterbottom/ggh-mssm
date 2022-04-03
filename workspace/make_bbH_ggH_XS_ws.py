@@ -117,13 +117,6 @@ for i, x in enumerate(bbhfull):
 
 fout = ROOT.TFile('xs_lowmass_yb_yt.root', 'RECREATE')
 
-g13 = ROOT.TGraph(); g13.SetName('xs_ggA_t')
-g14 = ROOT.TGraph(); g14.SetName('xs_ggA_t_up')
-g15 = ROOT.TGraph(); g15.SetName('xs_ggA_b')
-g16 = ROOT.TGraph(); g16.SetName('xs_ggA_b_up')
-g17 = ROOT.TGraph(); g17.SetName('xs_ggA_i')
-g18 = ROOT.TGraph(); g18.SetName('xs_ggA_i_up')
-
 from pandas import read_excel
 
 xl_file = 'Higgs_XSBR_YR4_update.xlsx'
@@ -139,8 +132,6 @@ for i in range(4,118):
   u1=df.iloc[i,4]
   u2=df.iloc[i,5]
   xs_u = ((u1/100.)**2+(u2/100.)**2)**.5
-  #g7.SetPoint(g7.GetN(), m, xs)
-  #g8.SetPoint(g8.GetN(), m, 1.+u)
 
   ws.var("mh").setVal(m)
   ws.var("mH").setVal(m)
@@ -168,16 +159,6 @@ for i in range(4,118):
     xs_map['H_b%(u)s' % vars()] = xs_H_b
     xs_map['H_i%(u)s' % vars()] = xs_H_i
 
-  #print '------'
-  #print xs_map['H_t_scale_down']/xs_map['H_t']
-  #print xs_map['H_t_scale_up']/xs_map['H_t']
-
-  #print xs_map['H_b_scale_down']/xs_map['H_b']
-  #print xs_map['H_b_scale_up']/xs_map['H_b']
-
-  #print xs_map['H_i_scale_down']/xs_map['H_i']
-  #print xs_map['H_i_scale_up']/xs_map['H_i']
-
   map_to_add['MH_ggH'].append(m)
 
   val = xs_map['H_t']
@@ -185,8 +166,6 @@ for i in range(4,118):
   val_d = xs_map['H_t_scale_down']
   u_nlo = ((max(val,val_u,val_d) - min(val,val_u,val_d))/2)/val
   u_tot = (u_nlo**2 +xs_u**2)**.5
-#  g7.SetPoint(g7.GetN(), m, val)
-#  g8.SetPoint(g8.GetN(), m, 1.+u_tot)
 
   map_to_add['xs_ggH'].append(xs)
   map_to_add['xs_ggH_up'].append((1.+xs_u)*xs)
@@ -303,7 +282,7 @@ for P in ['A','H','h']:
   w.factory('expr::xs_gg%(P)s_b("@0*@1*@1", gg%(P)s_b_xsec, Yb_%(P)s)' % vars())
   w.factory('expr::xs_gg%(P)s_i("@0*@1*@2", gg%(P)s_i_xsec, Yt_%(P)s, Yb_%(P)s)' % vars())
   for u in ['_up','_down']:
-    w.factory('expr::xs_bb%(P)s%(u)s("(@0*@2*@2 + (@1-@0)*@2*@3)/@4", bb%(P)s_ybyb_xsec%(u)s, bb%(P)s_ybyt_xsec%(u)s, Yb_%(P)s, Yt_%(P)s, xs_bb%(P)s)' % vars())
+    w.factory('expr::xs_bb%(P)s%(u)s("(@4==0) + (@4!=0)*((@0*@2*@2 + (@1-@0)*@2*@3)/@4)", bb%(P)s_ybyb_xsec%(u)s, bb%(P)s_ybyt_xsec%(u)s, Yb_%(P)s, Yt_%(P)s, xs_bb%(P)s)' % vars())
   for u in ['_up','_down']:
     w.factory('expr::xs_gg%(P)s%(u)s("@0/@1", gg%(P)s_xsec%(u)s, gg%(P)s_xsec)' % vars())
     w.factory('expr::xs_gg%(P)s_t%(u)s("@0*@1*@1/@2", gg%(P)s_t_xsec%(u)s, Yt_%(P)s, xs_gg%(P)s_t)' % vars())
